@@ -88,6 +88,8 @@ const DQ_REASONS = {
   listed: "Your home is currently listed on the market, so we can't make an offer right now. Once it's off-market, we'd be glad to take a look.",
   exploring: "It sounds like you're just gathering information right now. When you're ready to sell, come back and we'll get you a cash offer.",
   noReason: "It sounds like you're just gathering information right now. When you're ready to sell, come back and we'll get you a cash offer.",
+  excellentCondition: "Your home sounds like it's in great shape. We focus on properties that need some work, so we're not able to make a competitive offer on a move-in-ready home.",
+  shortOwnership: "Because you've owned the home for less than 5 years, we're not able to make an offer that works right now. If you've owned it longer or your situation changes, we'd be glad to take a look.",
 } as const
 type DqKey = keyof typeof DQ_REASONS
 
@@ -99,6 +101,8 @@ function checkHardDq(key: keyof FormState, value: string): DqKey | null {
   // hard-disqualifies. The id only exists in REASON_OPTIONS_V2, so this is inert
   // for the legacy list.
   if (key === "reason" && value === "no-reason") return "noReason"
+  if (key === "condition" && value === "excellent") return "excellentCondition"
+  if (key === "yearsOwned" && (value === "0-2" || value === "3-5")) return "shortOwnership"
   return null
 }
 

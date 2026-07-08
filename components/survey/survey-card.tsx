@@ -409,6 +409,14 @@ export function SurveyCard({ phoneDisplay = "(800) 000-0000", phoneHref = "80000
       setTimeout(() => { setDisqualifyReason("noReason"); setIsDisqualified(true) }, 300)
       return
     }
+    if (field === "condition" && value === "excellent") {
+      setTimeout(() => { setDisqualifyReason("excellentCondition"); setIsDisqualified(true) }, 300)
+      return
+    }
+    if (field === "ownershipLength" && ["less-than-3", "3-to-5"].includes(value)) {
+      setTimeout(() => { setDisqualifyReason("shortOwnership"); setIsDisqualified(true) }, 300)
+      return
+    }
 
     setTimeout(() => { if (step < totalSteps) setStep(step + 1) }, 300)
   }
@@ -464,6 +472,16 @@ export function SurveyCard({ phoneDisplay = "(800) 000-0000", phoneHref = "80000
         title: "Just Browsing?",
         message: "It sounds like you're gathering information right now rather than looking to sell.",
         detail: "When you're ready to sell, come back and we'll get you a fair cash offer. Feel free to call us any time if your situation changes.",
+      },
+      excellentCondition: {
+        title: "We're Not the Right Fit",
+        message: "Your home sounds like it's in great shape. We focus on properties that need some work, so we're not able to make a competitive offer on a move-in-ready home.",
+        detail: "If your situation changes or you'd still like to talk, feel free to give us a call.",
+      },
+      shortOwnership: {
+        title: "We're Unable to Assist",
+        message: "Because you've owned the home for less than 5 years, we're not able to make an offer that works for your situation right now.",
+        detail: "If you've owned it longer than that or your circumstances change, we'd be glad to take another look. Feel free to reach out.",
       },
     }
     const msg = disqualifyMessages[disqualifyReason] || disqualifyMessages.notOwner
